@@ -1,8 +1,8 @@
-import react, { Component } from "react";
-import { FaPlus } from "react-icons/fa";
-import { FaEdit, FaWindowClose } from "react-icons/fa";
-
+import React, { Component } from "react";
 import "./Main.css";
+
+import Form from "./Form";
+import Tarefas from "./Tarefas";
 
 export default class Main extends Component {
     constructor(props) {
@@ -12,6 +12,10 @@ export default class Main extends Component {
             tarefas: [],
             index: -1,
         };
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleEdit = this.handleEdit.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
     }
 
     componentDidMount() {
@@ -19,7 +23,6 @@ export default class Main extends Component {
         if (!tarefas) return;
         const newTarefas = JSON.parse(tarefas);
         this.setState({ tarefas: newTarefas });
-        console.log(newTarefas);
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -75,40 +78,18 @@ export default class Main extends Component {
         return (
             <div className="main">
                 <h1>Lista de Tarefas</h1>
-                <form action="#" className="form" onSubmit={this.handleSubmit}>
-                    <input
-                        type="text"
-                        onChange={this.handleChange}
-                        value={novaTarefa}
-                    />
-                    <button type="submit">
-                        <FaPlus />
-                    </button>
-                </form>
 
-                <ul className="tarefas">
-                    {tarefas.map((tarefa, index) => {
-                        return (
-                            <li key={tarefa} index={index}>
-                                {tarefa}
-                                <span>
-                                    <FaEdit
-                                        onClick={(e) =>
-                                            this.handleEdit(e, index)
-                                        }
-                                        className="edit"
-                                    />
-                                    <FaWindowClose
-                                        onClick={(e) =>
-                                            this.handleDelete(e, index)
-                                        }
-                                        className="delete"
-                                    />
-                                </span>
-                            </li>
-                        );
-                    })}
-                </ul>
+                <Form
+                    handleSubmit={this.handleSubmit}
+                    handleChange={this.handleChange}
+                    novaTarefa={novaTarefa}
+                />
+
+                <Tarefas
+                    tarefas={tarefas}
+                    handleDelete={this.handleDelete}
+                    handleEdit={this.handleEdit}
+                />
             </div>
         );
     }

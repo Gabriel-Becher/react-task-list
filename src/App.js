@@ -1,11 +1,10 @@
 import react from "react";
+
 import "./App.css";
+import Main from "./components/Main";
+
 function App() {
-  return (
-    <form action="http://34.95.249.49/alunos/" method="POST">
-      <button type="submit">Submit</button>
-    </form>
-  );
+  return <Main />;
 }
 
 export default App;
